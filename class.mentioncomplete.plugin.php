@@ -33,9 +33,25 @@ $PluginInfo['MentionComplete'] = array(
 class MentionComplete extends Gdn_Plugin
 {
 
-    public function DiscussionController_Render_Before($Sender) {
-        $Sender->AddJsFile($this->GetResource('js/jquery-textcomplete/jquery.textcomplete.min.js', FALSE, FALSE));
-        $Sender->AddJsFile($this->GetResource('js/mentioncomplete.js', FALSE, FALSE));
+    public function DiscussionController_Render_Before($Sender)
+    {
+        $Sender->AddJsFile($this->GetResource('js/jquery-textcomplete/jquery.textcomplete.min.js', false, false));
+        $Sender->AddJsFile($this->GetResource('js/mentioncomplete.js', false, false));
+
+        $MentionCompleteDefinition = array(
+          'start' => '',
+          'stop' => ''
+        );
+
+
+        if (C('Plugins.MentionsPlus.MentionStart')) {
+            $MentionCompleteDefinition['start'] = C('Plugins.MentionsPlus.MentionStart');
+        }
+        if (C('Plugins.MentionsPlus.MentionStop')) {
+            $MentionCompleteDefinition['stop'] = C('Plugins.MentionsPlus.MentionStop');
+        }
+
+        $Sender->AddDefinition('MentionComplete', $MentionCompleteDefinition);
     }
 
 }
