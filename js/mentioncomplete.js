@@ -22,7 +22,7 @@ $(document).ready(function () {
             if (mention.indexOf(' ') > -1) {
                 return '@' + gdn.definition('MentionComplete').start + mention + gdn.definition('MentionComplete').stop + ' ';
             }else{
-                return '@' + gdn.definition('MentionComplete').start + mention + gdn.definition('MentionComplete').stop + ' ';
+                return '@' + mention + ' ';
             }
         }
     }]);
