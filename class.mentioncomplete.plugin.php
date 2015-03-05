@@ -22,7 +22,9 @@ $PluginInfo['MentionComplete'] = array(
   'Version' => '0.1.0',
   'RequiredApplications' => null,
   'RequiredTheme' => false,
-  'RequiredPlugins' => false,
+  'RequiredPlugins' => array(
+    'Libraries' => '0.0.0'
+  ),
   'HasLocale' => false,
   'Author' => "GyD",
   'AuthorEmail' => 'github@gyd.be',
@@ -33,9 +35,32 @@ $PluginInfo['MentionComplete'] = array(
 class MentionCompletePlugin extends Gdn_Plugin
 {
 
+    /**
+     * At Libraries Startup
+     * @param LibrariesPlugin $Sender
+     */
+    public function LibrariesPlugin_Startup_Handler($Sender)
+    {
+        $Sender->addLibraries(array(
+          'jquery-textcomplete' => array(
+            'version' => '0.3.9',
+            'plugin' => get_class($this),
+            'files' => array(
+              'js' => "js/jquery-textcomplete/dist/jquery.textcomplete.js",
+              'js-min' => "js/jquery-textcomplete/dist/jquery.textcomplete.min.js",
+              'css' => "js/jquery-textcomplete/dist/jquery.textcomplete.css",
+                //'css-min' => "js/jquery-textcomplete/dist/jquery.textcomplete.css",
+            ),
+          ),
+        ));
+    }
+
+    /**
+     * @param DiscussionController $Sender
+     */
     public function DiscussionController_Render_Before($Sender)
     {
-        $Sender->AddJsFile($this->GetResource('js/jquery-textcomplete/jquery.textcomplete.min.js', false, false));
+        LibrariesPlugin::AttachLibrary($Sender, 'jquery-textcomplete');
         $Sender->AddJsFile($this->GetResource('js/mentioncomplete.js', false, false));
 
         $MentionCompleteDefinition = array(
