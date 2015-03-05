@@ -30,7 +30,7 @@ $PluginInfo['MentionComplete'] = array(
   'Hidden' => false
 );
 
-class MentionComplete extends Gdn_Plugin
+class MentionCompletePlugin extends Gdn_Plugin
 {
 
     public function DiscussionController_Render_Before($Sender)
